@@ -76,26 +76,10 @@ desc DEPENDENT;
 
 -- Create Tables end
 
--- Alter tables start 
-
-alter table DEPARTMENT add constraint Dep_emp foreign key (Mgr_ssn) references EMPLOYEE(Ssn);
-desc DEPARTMENT;
-
-alter table EMPLOYEE add constraint Emp_emp foreign key (Super_ssn) references EMPLOYEE(Ssn);
-desc EMPLOYEE;
-
-alter table EMPLOYEE add constraint Emp_dno foreign key (Dno) references DEPARTMENT(Dnumber);
-desc EMPLOYEE;
-
-alter table EMPLOYEE add constraint Emp_super foreign key (Super_ssn) references EMPLOYEE(Ssn);
-desc EMPLOYEE;
-
--- Alter tables end
-
 
 -- Insert Data start
 
-set foreign_key_checks = 0;
+-- set foreign_key_checks = 0;
 
 insert into EMPLOYEE
 values
@@ -130,15 +114,70 @@ values
 
 select * from PROJECT;
 
+insert into WORKS_ON
+values
+	(123456789,1,32.5),
+	(123456789,2,7.5),
+	(666884444,3,40.0),
+	(453453453,1,20.0),
+	(453453453,2,20.0),
+	(333445555,2,10.0),
+	(333445555,3,10.0),
+	(333445555,10,10.0),
+	(333445555,20,10.0),
+	(999887777,30,30.0),
+	(999887777,10,10.0),
+	(987987987,10,35.0),
+	(987987987,30,5.0),
+	(987654321,30,20.0),
+	(987654321,20,15.0),
+	(888665555,20,16.0);
+
+select * from WORKS_ON;
 
 
+insert into DEPENDENT
+values
+	(333445555,'Alice','F','1986-04-04','Daughter'),
+	(333445555,'Theodore','M','1983-10-25','Son'),
+	(333445555,'Joy','F','1958-05-03','Spouse'),
+	(987654321,'Abner','M','1942-02-28','Spouse'),
+	(123456789,'Michael','M','1988-01-04','Son'),
+	(123456789,'Alice','F','1988-12-30','Daughter'),
+	(123456789,'Elizabeth','F','1967-05-05','Spouse');
 
+select * from DEPENDENT;
 
+insert into DEPT_LOCATIONS
+values
+	(1,'Houston'),
+	(4,'Stafford'),
+	(5,'Bellaire'),
+	(5,'Sugarland'),
+	(5,'Houston');
 
-
+select * from DEPT_LOCATIONS;
 
 
 -- Insert Data end 
+
+
+
+-- Alter tables start 
+
+-- alter table DEPARTMENT add constraint Dep_emp foreign key (Mgr_ssn) references EMPLOYEE(Ssn);
+-- desc DEPARTMENT;
+
+-- alter table EMPLOYEE add constraint Emp_emp foreign key (Super_ssn) references EMPLOYEE(Ssn);
+-- desc EMPLOYEE;
+
+-- alter table EMPLOYEE add constraint Emp_dno foreign key (Dno) references DEPARTMENT(Dnumber);
+-- desc EMPLOYEE;
+
+-- alter table EMPLOYEE add constraint Emp_super foreign key (Super_ssn) references EMPLOYEE(Ssn);
+-- desc EMPLOYEE;
+
+-- Alter tables end
 
 
 
