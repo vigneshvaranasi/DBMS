@@ -77,6 +77,8 @@ desc DEPENDENT;
 -- Create Tables end
 
 
+
+
 -- Insert Data start
 
 -- set foreign_key_checks = 0;
@@ -114,7 +116,7 @@ values
 
 select * from PROJECT;
 
-insert into WORKS_ON
+insert into WORKERS_ON
 values
 	(123456789,1,32.5),
 	(123456789,2,7.5),
@@ -133,7 +135,7 @@ values
 	(987654321,20,15.0),
 	(888665555,20,16.0);
 
-select * from WORKS_ON;
+select * from WORKERS_ON;
 
 
 insert into DEPENDENT
@@ -157,6 +159,7 @@ values
 	(5,'Houston');
 
 select * from DEPT_LOCATIONS;
+
 
 
 -- Insert Data end 
