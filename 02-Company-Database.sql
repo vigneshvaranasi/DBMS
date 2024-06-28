@@ -95,6 +95,7 @@ desc EMPLOYEE;
 
 -- Insert Data start
 
+set foreign_key_checks = 0;
 
 insert into EMPLOYEE
 values
@@ -116,6 +117,21 @@ values
     ('Headquarters', 1, '888665555', '1981-06-19');
 
 select * from DEPARTMENT;
+
+
+insert into PROJECT
+values
+	('ProductX',1,'Bellaire',5),
+	('ProductY',2,'Sugarland',5),
+	('ProductZ',3,'Houston',5),
+	('Computerization',10,'Stafford',4),
+	('Reorganization',20,'Houston',1),
+	('Newbenefits',30,'Stafford',4);
+
+select * from PROJECT;
+
+
+
 
 
 
