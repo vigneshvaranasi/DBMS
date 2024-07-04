@@ -335,4 +335,82 @@ mysql> select * from DEPT_LOCATIONS;
 +---------+-----------+
 5 rows in set (0.00 sec)
 
+mysql> alter table DEPARTMENT add constraint Dep_emp foreign key (Mgr_ssn) references EMPLOYEE(Ssn);
+Query OK, 3 rows affected (0.09 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> desc DEPARTMENT;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| Dname          | varchar(15) | NO   | UNI | NULL    |       |
+| Dnumber        | int         | NO   | PRI | NULL    |       |
+| Mgr_ssn        | char(9)     | NO   | MUL | NULL    |       |
+| Mgr_start_date | date        | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table EMPLOYEE add constraint Emp_emp foreign key (Super_ssn) references EMPLOYEE(Ssn);
+Query OK, 8 rows affected (0.07 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> desc EMPLOYEE;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| Fname     | varchar(10)  | NO   |     | NULL    |       |
+| Minit     | char(1)      | YES  |     | NULL    |       |
+| Lname     | varchar(20)  | NO   |     | NULL    |       |
+| Ssn       | char(9)      | NO   | PRI | NULL    |       |
+| Bdate     | date         | YES  |     | NULL    |       |
+| Address   | varchar(30)  | YES  |     | NULL    |       |
+| Sex       | char(1)      | YES  |     | NULL    |       |
+| Salary    | decimal(5,0) | YES  |     | NULL    |       |
+| Super_ssn | char(9)      | YES  | MUL | NULL    |       |
+| Dno       | int          | NO   |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+10 rows in set (0.00 sec)
+
+mysql> alter table EMPLOYEE add constraint Emp_dno foreign key (Dno) references DEPARTMENT(Dnumber);
+Query OK, 8 rows affected (0.13 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> desc EMPLOYEE;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| Fname     | varchar(10)  | NO   |     | NULL    |       |
+| Minit     | char(1)      | YES  |     | NULL    |       |
+| Lname     | varchar(20)  | NO   |     | NULL    |       |
+| Ssn       | char(9)      | NO   | PRI | NULL    |       |
+| Bdate     | date         | YES  |     | NULL    |       |
+| Address   | varchar(30)  | YES  |     | NULL    |       |
+| Sex       | char(1)      | YES  |     | NULL    |       |
+| Salary    | decimal(5,0) | YES  |     | NULL    |       |
+| Super_ssn | char(9)      | YES  | MUL | NULL    |       |
+| Dno       | int          | NO   | MUL | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+10 rows in set (0.00 sec)
+
+mysql> alter table EMPLOYEE add constraint Emp_super foreign key (Super_ssn) references EMPLOYEE(Ssn);
+Query OK, 8 rows affected (0.07 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> desc EMPLOYEE;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| Fname     | varchar(10)  | NO   |     | NULL    |       |
+| Minit     | char(1)      | YES  |     | NULL    |       |
+| Lname     | varchar(20)  | NO   |     | NULL    |       |
+| Ssn       | char(9)      | NO   | PRI | NULL    |       |
+| Bdate     | date         | YES  |     | NULL    |       |
+| Address   | varchar(30)  | YES  |     | NULL    |       |
+| Sex       | char(1)      | YES  |     | NULL    |       |
+| Salary    | decimal(5,0) | YES  |     | NULL    |       |
+| Super_ssn | char(9)      | YES  | MUL | NULL    |       |
+| Dno       | int          | NO   | MUL | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+10 rows in set (0.00 sec)
+
 mysql>
