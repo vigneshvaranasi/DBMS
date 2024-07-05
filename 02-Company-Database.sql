@@ -1,7 +1,7 @@
 create database COMPANY;
 use COMPANY;
 show tables;
--- Create Tables start
+-- Create tables start
 create table EMPLOYEE(
 	Fname varchar(10) not null,
 	Minit char,
@@ -74,14 +74,9 @@ create table DEPENDENT(
 
 desc DEPENDENT;
 
--- Create Tables end
-
-
-
+-- Create tables end
 
 -- Insert Data start
-
--- set foreign_key_checks = 0;
 
 insert into EMPLOYEE
 values
@@ -161,30 +156,157 @@ values
 select * from DEPT_LOCATIONS;
 
 
-
 -- Insert Data end 
 
 
+-- Queries
 
--- Alter tables start 
+-- 1.For every project located in 'Stafford', list the project number, the controlling department number and name. 
+select P.Pnumber, P.Dnum, D.Dname from PROJECT P join DEPARTMENT D on P.Dnum = D.Dnumber where P.Plocation = 'Stafford';
 
--- alter table DEPARTMENT add constraint Dep_emp foreign key (Mgr_ssn) references EMPLOYEE(Ssn);
--- desc DEPARTMENT;
+-- 2.For every project located in 'Houston', list the project number, the controlling department number, and the department manager's last name, address, and birthdate.
+select P.Pnumber, P.Dnum, E.Lname, E.Address, E.Bdate 
+from PROJECT P 
+join DEPARTMENT D on P.Dnum = D.Dnumber 
+join EMPLOYEE E on D.Mgr_ssn = E.Ssn 
+where P.Plocation = 'Houston';
 
--- alter table EMPLOYEE add constraint Emp_emp foreign key (Super_ssn) references EMPLOYEE(Ssn);
--- desc EMPLOYEE;
+-- 3.Retrieve the names of the managers for each department 
+select D.Dname, E.Fname, E.Minit, E.Lname 
+from DEPARTMENT D 
+join EMPLOYEE E on D.Mgr_ssn = E.Ssn;
 
--- alter table EMPLOYEE add constraint Emp_dno foreign key (Dno) references DEPARTMENT(Dnumber);
--- desc EMPLOYEE;
+-- 4.Show the resulting salaries if every employee working on the ‘ProductX’ project is given a 10 percent raise
+select E.Fname, E.Lname, E.Salary, (E.Salary * 1.1) as NewSalary
+from EMPLOYEE E
+join WORKERS_ON W on  E.Ssn = W.Essn
+join PROJECT P on W.Pno = P.Pnumber
+where P.Pname = 'ProductX';
 
--- alter table EMPLOYEE add constraint Emp_super foreign key (Super_ssn) references EMPLOYEE(Ssn);
--- desc EMPLOYEE;
+-- 5.For each employee, retrieve the employee's name, and the name of his or her immediate supervisor.
+select E1.Fname as EmployeeFirstName, E1.Lname as EmployeeLastName, 
+       E2.Fname as SupervisorFirstName, E2.Lname as SupervisorLastName
+from EMPLOYEE E1
+left join EMPLOYEE E2 on E1.Super_ssn = E2.Ssn;
 
--- Alter tables end
+-- 6.Retrieve a list of employees and the projects  they are working on,order by department 
+select E.Fname, E.Lname, D.Dname as DepartmentName, P.Pname as ProjectName
+from EMPLOYEE E
+join DEPARTMENT D on E.Dno = D.Dnumber
+join WORKERS_ON W on E.Ssn = W.Essn
+join PROJECT P on W.Pno = P.Pnumber
+order by D.Dname;
+
+-- Task 1
+
+-- 7.Retrieve the birthdate and address of the employee whose name is 'John B. Smith'.
+select Bdate, Address
+from EMPLOYEE
+where Fname = 'John' and Minit = 'B' and Lname = 'Smith';
+
+-- 8.List the employees working in department 10
+select Fname, Minit, Lname from EMPLOYEE where Dno = 10;
+
+-- 9.Retrieve distinct salary values from employee table
+select distinct Salary from EMPLOYEE;
+
+-- 10.Retrieve all employees whose address is in ‘Houston,Texas’
+select Fname, Minit, Lname from EMPLOYEE where Address like '%Houston, Texas%';
+
+-- 11.Find all employees who were born during 1950s
+select Fname, Minit, Lname, Bdate from EMPLOYEE where Bdate BETWEEN '1950-01-01' and '1959-12-31';
+
+-- 12.Add a column phone_no to dept_location table.
+alter table DEPT_LOCATIONS add(phone_no int(10));
+select * from DEPT_LOCATIONS;
+
+-- 13.Add ‘super_ssn’ as a foreign key for employee table.
+alter table EMPLOYEE add constraint Emp_super foreign key (Super_ssn) references EMPLOYEE(Ssn);
+desc EMPLOYEE;
+
+-- 14.Modify the size of address column in employee table to 30. -> Starting only while Creating we took 30
+-- This is the cmd to modify the size of address column in employee table to 30.
+alter table EMPLOYEE modify Address varchar(30);
+desc EMPLOYEE;
+
+-- 15.Change the salary of ‘franklin wong’ to 35000
+update EMPLOYEE set Salary = 35000 where Fname = 'Franklin' and Lname = 'Wong';
+select * from EMPLOYEE where Fname = 'Franklin' and Lname = 'Wong';
+
+-- 16.Change the location and controlling department number of project no 10 to ‘Bellaire’ and 5.
+update PROJECT set Plocation = 'Bellaire', Dnum = 5 where Pnumber = 10;
+select * from PROJECT where Pnumber = 10;
+
+-- 17.update the salary of all employees in department no 10 by 10%
+update EMPLOYEE set Salary = Salary * 1.1 where Dno = 10;
+select * from EMPLOYEE where Dno = 10;
+
+-- 18.List the employees between the salary range 30000 to 40000
+select Fname, Minit, Lname, Salary from EMPLOYEE where Salary BETWEEN 30000 and 40000;
+
+-- 19.List the names and salaries of employees earning a salary of 35000 or more.
+select Fname, Minit, Lname, Salary from EMPLOYEE where Salary >= 35000;
+
+-- 20.List the employees who are staying in ‘Houston’ and earning a salary greater than 30000
+select Fname, Minit, Lname, Salary from EMPLOYEE where Address like '%Houston%' and Salary > 30000;
+
+-- 21.Retrieve the Female employees who belongs to either department 4 or 1
+select Fname, Minit, Lname, Sex, Dno from EMPLOYEE where Sex = 'F' and (Dno = 4 OR Dno = 1);
+
+-- 22.Retrieve the projects controlled by  department 10 
+select Pname, Pnumber from PROJECT where Dnum = 10;
+
+-- 23.delete the employee with name ‘joyce’
+-- For this the foreign key constraint should be removed first
+delete from workers_on where Essn = (select Ssn from EMPLOYEE where Fname = 'Joyce');
+delete from EMPLOYEE where Fname = 'Joyce';
+select * from EMPLOYEE;
+
+-- 24.Retrieve all the Male employees from employee.
+select * from EMPLOYEE where Sex = 'M';
+
+-- 25.List the departments with ‘e’ as the second letter in their name.
+select * from DEPARTMENT where Dname like '_e%';
 
 
+-- Task 2
+
+-- 26.Retrieve the name and address of all employees who work for the 'Research' department.
+select E.Fname, E.Lname, E.Address from EMPLOYEE E join DEPARTMENT D on E.Dno = D.Dnumber where D.Dname = 'Research';
 
 
+-- 27.For every project located in 'Stafford', list the project number, the controlling department number and name. 
+select P.Pnumber, P.Dnum, D.Dname from PROJECT P join DEPARTMENT D on P.Dnum = D.Dnumber where P.Plocation = 'Stafford';
+
+-- 28.For every project located in 'Houston', list the project number, the controlling department number, and the department manager's last name, address, and birthdate.
+select P.Pnumber, P.Dnum, E.Lname, E.Address, E.Bdate
+from PROJECT P join DEPARTMENT D on P.Dnum = D.Dnumber join EMPLOYEE E on D.Mgr_ssn = E.Ssn
+where P.Plocation = 'Houston';
 
 
+-- 29.Retrieve the names of the managers for each department 
+select D.Dname, E.Fname, E.Minit, E.Lname from DEPARTMENT D join EMPLOYEE E on D.Mgr_ssn = E.Ssn;
+
+-- 30.Show the resulting salaries if every employee working on the ‘ProductX’ project is given a 10 percent raise
+select E.Fname, E.Minit, E.Lname, E.Salary, E.Salary * 1.10 as New_Salary
+from employee E
+join workers_on W on E.Ssn = W.Essn
+join project P on W.Pno = P.Pnumber
+where P.Pname = 'ProductX';
+
+
+-- 31.For each employee, retrieve the employee's name, and the name of his or her immediate supervisor.
+select E.Fname as Employee_Fname, E.Minit as Employee_Minit, E.Lname as Employee_Lname,
+       S.Fname as Supervisor_Fname, S.Minit as Supervisor_Minit, S.Lname as Supervisor_Lname
+from EMPLOYEE E
+left join EMPLOYEE S on E.Super_ssn = S.Ssn;
+
+-- 32.Retrieve a list of employees and the projects they are working on,order by department 
+select E.Fname, E.Minit, E.Lname, P.Pname, E.Dno 
+from EMPLOYEE E 
+join workers_on W 
+on E.Ssn = W.Essn 
+join PROJECT P 
+on W.Pno = P.Pnumber 
+order by E.Dno;
 
