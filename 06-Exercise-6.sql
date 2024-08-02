@@ -228,3 +228,30 @@ select  PROJECT.Pnumber,PROJECT.Pname, count(*)
 from PROJECT,EMPLOYEE
 where EMPLOYEE.Dno = PROJECT.Dnum and PROJECT.Dnum = 5
 group by Pname;
+
+-- ROLL UP -> The ROLL UP clause is used to return the grand total of the groups of rows.
+select sum(Salary),EMPLOYEE.Dno
+from EMPLOYEE
+group by Dno with rollup;
+
+
+-- Exercise 6 Continution
+
+-- List the names of the emps whose salsry is > all emps in dept 5
+select Fname
+from EMPLOYEE
+where Salary > all (
+    select Salary
+    from EMPLOYEE
+    where Dno = 5
+);
+
+-- List the names of he emps whose salary is above avg of their dept
+select Fname
+from EMPLOYEE
+where Salary > all (
+    select avg(Salary)
+    from EMPLOYEE
+    where Dno = EMPLOYEE.Dno
+);
+
