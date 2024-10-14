@@ -1,0 +1,11 @@
+{
+  "name": "dbmslab",
+  "version": "1.0.0",
+  "description": "- [ ] Exp 2 => Task 2  \r     - [ ] Implementation of Constraints PRIMARY KEY, FOREIGN KEY, CHECK, NOT NULL, UNIQUE.\r - [ ] Exp 7 => Full\r     - [ ] INNER JOIN\r     - [ ] OUTER JOIN USING NATURAL KEYWORDS\r - [ ] Exp 8 => Full\r     - [ ] SUB/SUMMARY Queries Using IN, ANY, SOME, ALL , EXISTS and NOT EXISTS functions\r     - [ ] Retrieval of data from interrelated tables in the database in several ways\r - [ ] Exp 10 => Full\r     - [ ] Create and Call STORED PROCEDURE (IN, OUT, INOUT Parameters), Drop a STORED PROCEDURE.\r     - [ ] Create, call and Drop a FUNCTION.\r     - [ ] Create and Drop a TRIGGER",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

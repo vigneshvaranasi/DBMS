@@ -30,6 +30,10 @@ values
     ('James', 'E', 'Borg', 888665555, '1937-11-10', '450 Stone, Houston TX', 'M', 55000, NULL, 1);
 select * from EMPLOYEE;
 
+
+
+
+
 -- String Functions
 
 -- Instr -> Returns the position of the first occurrence of a substring in a string
@@ -101,6 +105,12 @@ select strcmp("ABD","ABC");
 select substr("Hello World", 2, 5);
 select substr("Hello World", 2);
 
+
+
+
+
+
+-- Numeric Functions
 -- count -> Returns the number of rows in a result set
 select count(Fname) from EMPLOYEE;
 
@@ -112,7 +122,6 @@ select ceil(1234.23);
 
 -- min,max,avg,sum -> Returns the minimum, maximum, average, and sum of the values in a column
 select min(Salary),max(Salary),avg(Salary),sum(Salary) from EMPLOYEE;
-
 
 
 
